@@ -9,6 +9,9 @@ var defenderChar;
 var defenderAttackPower;
 var defenderHealth;
 
+var wins = 0;
+var losses = 0;
+
 var battleOn;
 var players = [];
 
@@ -37,7 +40,7 @@ function gameinit() {
             luke: {
                 charId: "luke",
                 name: "Luke Skywalker",
-                attackpower: 20,
+                attackpower: 10,
                 counter: 10,
                 health: 120,
                 avatar: "assets/images/luke.png"
@@ -46,24 +49,24 @@ function gameinit() {
                 charId: "stormtrooper",
                 name: "Storm Trooper",
                 attackpower: 10,
-                counter: 15,
-                health: 150,
+                counter: 8,
+                health: 110,
                 avatar: "assets/images/stormtrooper.png"
             },
             darthmaul: {
                 charId: "darthmaul",
                 name: "Darth Maul",
-                attackpower: 10,
-                counter: 16,
-                health: 160,
+                attackpower: 7,
+                counter: 12,
+                health: 140,
                 avatar: "assets/images/darthmaul.png"
             },
             vader: {
                 charId: "vader",
                 name: "Vader",
                 attackpower: 12,
-                counter: 20,
-                health: 180,
+                counter: 17,
+                health: 160,
                 avatar: "assets/images/vader.png"
             } 
         }
@@ -82,7 +85,7 @@ function gameinit() {
 function displayChars() {
     $("#displaychars").html("");
     $.each(players.characters, function(i, v) {
-        $("#displaychars").append("<a href=\"#\" class=\"selectchar\" value=\"" + v.charId + "\"><div class=\"char rounded\"><img src=\"" + v.avatar + "\"><br>" + v.name + "</div></a>"); 
+        $("#displaychars").append("<a href=\"#\" class=\"selectchar\" value=\"" + v.charId + "\"><div class=\"char rounded\"><img src=\"" + v.avatar + "\"><br>" + v.name + "<br>" + v.health + "</div></a>"); 
     });
 };
 
@@ -169,6 +172,8 @@ $(document).on("click", "#attackbtn", function() {
 
     // If your health is less than 0, then you lose
     if (yourHealth < 0) {
+        losses++;
+        $("#score").html("<div id=\"score\" class=\"mt-2\"><h2>Wins: " + wins + " | Losses: " + losses + " </h2></div> ");
         $("#message").html("<h1>You Lose!</h1>");
         $("#attack").html("<button class=\"btn btn-success btn-lg\" id=\"reset\">Restart Game</button>");
     };
@@ -182,6 +187,8 @@ $(document).on("click", "#attackbtn", function() {
             battleOn = false;
         // If no more enemies to fight, you win
         } else {
+            wins++;
+            $("#score").html("<div id=\"score\" class=\"mt-2\"><h2>Wins: " + wins + " | Losses: " + losses + " </h2></div> ");
             $("#message").html("<h1>You Win!</h1>");
             $("#attack").html("<button class=\"btn btn-success btn-lg\" id=\"reset\">Restart Game</button>");
             battleOn = false;
