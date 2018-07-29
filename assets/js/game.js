@@ -4,6 +4,7 @@ var yourChar;
 var yourScore;
 var defenderChar;
 var defenderScore;
+var battleOn;
 
 
 var players = {
@@ -42,6 +43,7 @@ function gameinit() {
     yourScore = "";
     defenderChar = "";
     defenderScore = "";
+    battleOn = false;
 
     $("#message").html("<h1>Select Your Character</h1>")
 
@@ -50,27 +52,30 @@ function gameinit() {
 }
 
 
-    $(".selectchar").on("click", function() {
-        if (yourChar == "") {
-            yourCharValue = $(this).attr('value'); 
-            yourChar = players.characters[yourCharValue];
-            
-            $("#youravatar").html("<div class=\"char rounded\"><img src=\"" + yourChar.avatar + "\"></div><br>" + yourChar.name); 
-
-            console.log("You Picked " + yourChar.name);
-            delete players.characters[yourCharValue];
-            displayChars();
-            $("#message").html("<h1>Pick a Defender</h1>");
-
+    $(document).on("click", ".selectchar", function() {
+        if (!battleOn) {
+            if (yourChar == "") {
+                yourCharValue = $(this).attr('value'); 
+                yourChar = players.characters[yourCharValue];
+                
+                $("#youravatar").html("<div class=\"char rounded\"><img src=\"" + yourChar.avatar + "\"></div><br>" + yourChar.name); 
+                console.log("You Picked " + yourChar.name);
+                delete players.characters[yourCharValue];
+                displayChars();
+                $("#message").html("<h1>Pick a Defender</h1>");
+    
+            } else {
+                defenderCharValue = $(this).attr('value');
+                defenderChar = players.characters[defenderCharValue];
+                $("#defenderavatar").html("<div class=\"char rounded\"><img src=\"" + defenderChar.avatar + "\"></div><br>" + defenderChar.name);  
+                console.log("Defender is " + defenderChar.name);
+                delete players.characters[defenderCharValue];
+                displayChars();
+                $("#message").html("<h1>Let's Battle!</h1>");
+                battleOn = true;
+            }
         } else {
-            alert("Hello");
-            defenderCharValue = $(this).attr('value');
-            defenderChar = players.characters[defenderCharValue];
-            $("#defenderavatar").html("<div class=\"char rounded\"><img src=\"" + defenderChar.avatar + "\"></div><br>" + defenderChar.name);  
-            console.log("Defender is " + yourChar.name);
-            delete players.characters[defenderCharValue];
-            displayChars();
-            $("#message").html("<h1>Let's Battle!</h1>");
+            alert("Battle is already on!");
         }
     });
 
@@ -79,7 +84,7 @@ function gameinit() {
 function displayChars() {
     $("#displaychars").html("");
     $.each(players.characters, function(i, v) {
-        $("#displaychars").append("<a href=\"#\" class=\"selectchar\" value=\"" + v.charId + "\"><div class=\"char rounded\"><img src=\"" + v.avatar + "\"><br>" + v.name + "</div></a>"); 
+        $("#displaychars").append("<a class=\"selectchar\" value=\"" + v.charId + "\"><div class=\"char rounded\"><img src=\"" + v.avatar + "\"><br>" + v.name + "</div></a>"); 
     });
 };
 
