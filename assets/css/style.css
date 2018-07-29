@@ -30,5 +30,16 @@ body {
 }
 
 h1 {
-    margin: 50px 0px;
+    margin: 30px 0px;
 }
+
+.health {
+  font-size: 40px;
+  font-weight: bold;
+  background-color: #333333;
+}
+.attackpower{
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #333333;
+  }
