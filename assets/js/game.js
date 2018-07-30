@@ -171,15 +171,14 @@ $(document).on("click", "#attackbtn", function() {
     $("#attackpower").html("Attack Power: " + yourNewAttackPower);
 
     // If your health is less than 0, then you lose
-    if (yourHealth < 0) {
+    if (yourHealth < 0 && defenderHealth > 0) {
         losses++;
         $("#score").html("<div id=\"score\" class=\"mt-2\"><h2>Wins: " + wins + " | Losses: " + losses + " </h2></div> ");
         $("#message").html("<h1>You Lose!</h1>");
         $("#attack").html("<button class=\"btn btn-success btn-lg\" id=\"reset\">Restart Game</button>");
-    };
-    
+
     // If defender health is less than 0, then you pick new enemy until there are no enemies to fight
-    if (defenderHealth < 0) {
+    } else if (defenderHealth < 0) {
         // Check if more enemies left to fight.
         if (Object.keys(players.characters).length > 0) {
             $("#message").html("<h1>Enemy Defeated!</h1>");
