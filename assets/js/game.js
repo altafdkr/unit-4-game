@@ -15,6 +15,9 @@ var losses = 0;
 var battleOn;
 var players = [];
 
+// Get Audio Element
+var shootAudio = document.getElementById('shootaudio');
+
 // Initialize Game
 gameinit();
 
@@ -157,6 +160,10 @@ $(document).on("click", ".selectchar", function() {
 
 // Function called when Attack button is clicked
 $(document).on("click", "#attackbtn", function() {
+
+    // Play Shooting Audio
+    shootAudio.play();
+
     // Reduce Defender Health
     defenderHealth -= yourNewAttackPower;
     $("#defenderhealth").html(defenderHealth);
@@ -173,9 +180,9 @@ $(document).on("click", "#attackbtn", function() {
     // If your health is less than 0, then you lose
     if (yourHealth < 0 && defenderHealth > 0) {
         losses++;
-        $("#score").html("<div id=\"score\" class=\"mt-2\"><h2>Wins: " + wins + " | Losses: " + losses + " </h2></div> ");
+        $("#score").html("<div class=\"mt-2\"><h2>Wins: " + wins + " | Losses: " + losses + " </h2></div> ");
         $("#message").html("<h1>You Lose!</h1>");
-        $("#attack").html("<button class=\"btn btn-success btn-lg\" id=\"reset\">Restart Game</button>");
+        $("#attack").html("<button class=\"btn btn-success btn-lg\" id=\"restart\">Restart Game</button>");
 
     // If defender health is less than 0, then you pick new enemy until there are no enemies to fight
     } else if (defenderHealth < 0) {
@@ -187,9 +194,9 @@ $(document).on("click", "#attackbtn", function() {
         // If no more enemies to fight, you win
         } else {
             wins++;
-            $("#score").html("<div id=\"score\" class=\"mt-2\"><h2>Wins: " + wins + " | Losses: " + losses + " </h2></div> ");
+            $("#score").html("<div class=\"mt-2\"><h2>Wins: " + wins + " | Losses: " + losses + " </h2></div> ");
             $("#message").html("<h1>You Win!</h1>");
-            $("#attack").html("<button class=\"btn btn-success btn-lg\" id=\"reset\">Restart Game</button>");
+            $("#attack").html("<button class=\"btn btn-success btn-lg\" id=\"restart\">Restart Game</button>");
             battleOn = false;
         }
         
@@ -208,5 +215,13 @@ $(document).on("click", "#pickenemy", function() {
 
 // Reset function
 $(document).on("click", "#reset", function() {
+    wins = 0;
+    losses = 0;
+    $("#score").html("<div class=\"mt-2\"><h2>Wins: " + wins + " | Losses: " + losses + " </h2></div> ");
+    gameinit();
+});
+
+// Restart function
+$(document).on("click", "#restart", function() {
     gameinit();
 });
